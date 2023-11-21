@@ -15,11 +15,9 @@ const connectDB = async () => {
     try {
         const dbUser = config.dbUser; // Username from config
         const dbPassword = config.dbPassword; // Password from config
-        const dbHost = config.dbHost; // MongoDB server host from config
-        const dbName = config.dbName; // Database name from config
 
         // Construct the MongoDB URI
-        const uri = `mongodb://${dbUser}:${dbPassword}@${dbHost}/${dbName}?authSource=admin`;
+        const uri = `mongodb://${dbUser}:${dbPassword}@127.0.0.1:27017/mmpli?authSource=admin`;
         await mongoose.connect(uri);
         console.log('MongoDB connected');
     } catch (error) {
@@ -29,3 +27,4 @@ const connectDB = async () => {
 };
 
 export { connectDB };
+

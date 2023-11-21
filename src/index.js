@@ -2,6 +2,7 @@ import { connectDB } from './db/index.js';
 import express from 'express';
 import { leaderboardRouter } from './db/routes/leaderboards.js';
 import cors from 'cors';
+import config from './config.js';
 
 // Connect to MongoDB
 connectDB();
@@ -33,7 +34,7 @@ app.get('/', (req, res) => {
 app.use('/leaderboards', leaderboardRouter);
 
 // Start Express app
-const port = 3000;
+const port = config.Port;
 app.listen(port, () => {
     console.log(`Server started at http://localhost:${port}`);
 });

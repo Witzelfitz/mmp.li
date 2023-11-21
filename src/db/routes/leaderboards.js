@@ -1,5 +1,5 @@
 import express from 'express';
-import {Leaderboard, validateLeaderboard } from '../models/Leaderboard.js';
+import {Leaderboard, validateLeaderboard } from '../models/leaderboard.js';
 
 const router = express.Router();
 
