@@ -4,6 +4,12 @@ import {Leaderboard, validateLeaderboard } from '../models/Leaderboard.js';
 const router = express.Router();
 
 // Get all leaderboards from database
+router.get('/', async (req, res) => {
+    const leaderboards = await Leaderboard.find();
+    res.send(leaderboards);
+});
+
+// Get all leaderboards from database
 router.get('/:projectId', async (req, res) => {
     const projectId = req.params.projectId;
     const leaderboards = await Leaderboard.find({ projectId }).sort('score');
