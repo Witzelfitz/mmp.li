@@ -12,8 +12,11 @@ router.get('/', async (req, res) => {
 // Get all leaderboards from database
 router.get('/:projectId', async (req, res) => {
     const projectId = req.params.projectId;
-    const leaderboards = await Leaderboard.find({ projectId }).sort('score');
-    res.send(leaderboards);
+    const leaderboard = await Leaderboard.findOne({ projectId });
+    if (!leaderboard) {
+        return res.status(404).send(`Leaderboard ${projectId} not found`);
+    }
+    res.send(leaderboard);
 });
 
 // Create a new leaderboard

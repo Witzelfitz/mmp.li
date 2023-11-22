@@ -26,7 +26,11 @@ app.get('/', (req, res) => {
         </ul>
         <h2>Post</h2>
         <ul>
-            <li><a href="/leaderboards/:id">/leaderboards/:id</a>: Hier kannst du ein neues Leaderboard erstellen</li>
+            <li><a href="/leaderboards/:id">/leaderboards</a>: Hier kannst du ein neues Leaderboard erstellen.<br> {
+                "projectId": "blub",
+                "name": "Beni",
+                "score": 45
+            }</li>
         </ul>
     `);
 });
