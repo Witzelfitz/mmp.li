@@ -17,9 +17,9 @@ Dieses Dokument enthält Anleitungen zur Nutzung der Leaderboard API. Die API er
 - **Methode**: POST
 - **Beschreibung**: Erstellt einen neuen Eintrag im Leaderboard.
 - Datenparameter:
-    - projectId: Die Projekt-ID.
-    - name: Der Name des Teilnehmenden.
-    - score: Die Punktzahl des Teilnehmenden.
+    - projectId: Die Projekt-ID (type=string)
+    - name: Der Name des Teilnehmenden (type=string)
+    - score: Die Punktzahl des Teilnehmenden (type=number)
 
 ## Code-Beispiele
 ### Funktion zum Abrufen von Daten (getData)
