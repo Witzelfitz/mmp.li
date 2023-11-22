@@ -22,11 +22,11 @@ app.get('/', (req, res) => {
         <h2>Get</h2>
         <ul>
             <li><a href="/leaderboards">/leaderboards</a>: Hier sind sämtliche Leaderboards aufgelistet</li>
-            <li><a href="/leaderboards/:id">/leaderboards/:id</a>: So wird ein einzelnes Leaderboard aufgerufen</li>
+            <li><a href="/leaderboards/:id">/leaderboards/:id</a>: So wird ein einzelnes Leaderboard aufgerufen (:id muss durch einen string ersetzt werden)</li>
         </ul>
         <h2>Post</h2>
         <ul>
-            <li><a href="/leaderboards/:id">/leaderboards</a>: Hier kannst du ein neues Leaderboard erstellen.<br> {
+            <li><a href="/leaderboards/">/leaderboards</a>: Hier kannst du ein neues Leaderboard erstellen.<br> {
                 "projectId": "blub",
                 "name": "Beni",
                 "score": 45
