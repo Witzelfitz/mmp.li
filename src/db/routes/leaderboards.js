@@ -19,6 +19,17 @@ router.get('/:projectId', async (req, res) => {
     res.send(leaderboard);
 });
 
+// Delete a leaderboard
+router.delete('/delete/:projectId', async (req, res) => {
+    const projectId = req.params.projectId;
+    const leaderboard = await Leaderboard.findOneAndDelete({ projectId });
+    if (!leaderboard) {
+        return res.status(404).send(`Leaderboard ${projectId} not found`);
+    }
+    res.send(leaderboard);
+});
+
+
 // Create a new leaderboard
 router.post('/', async (req, res) => {
     const { error } = validateLeaderboard(req.body);
