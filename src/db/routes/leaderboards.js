@@ -37,7 +37,9 @@ router.post('/', async (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    const { projectId, name, score } = req.body;
+    let { projectId, name, score } = req.body;
+    projectId = projectId.replace(/\s+/g, '');
+
 
     // Construct the entry object
     const newEntry = { name, score };
