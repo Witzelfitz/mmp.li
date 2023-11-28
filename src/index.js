@@ -48,6 +48,12 @@ app.get('/', (req, res) => {
                 "text": "Beni"
             }</li>
         </ul>
+        <h2>Put</h2>
+        <ul>
+            <li><a href="/notes/entry/:id">/notes/entry/:id</a>: Hier kannst du einen Eintrag bearbeiten<br> {
+                "title": "blub",
+                "text": "Beni"
+            }</li>
     `);
 });
 

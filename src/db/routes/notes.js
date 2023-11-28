@@ -60,4 +60,37 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/entry/:entryId', async (req, res) => {
+    const entryId = req.params.entryId;
+    const { title, text } = req.body;
+
+    // Validierung (optional, kann nach Bedarf angepasst werden)
+    if (!title || !text) {
+        return res.status(400).send('Title and text are required.');
+    }
+
+    try {
+        // Finden und Aktualisieren des Eintrags in der Notiz
+        const note = await Note.findOneAndUpdate(
+            { "entries._id": entryId },
+            { 
+                $set: {
+                    "entries.$.title": title,
+                    "entries.$.text": text
+                }
+            },
+            { new: true } // Gibt das aktualisierte Dokument zurück
+        );
+
+        if (!note) {
+            return res.status(404).send(`Entry with ID ${entryId} not found`);
+        }
+
+        res.send(note);
+    } catch (e) {
+        res.status(500).send('An error occurred: ' + e.message);
+    }
+});
+
+
 export { router as notesRouter };
