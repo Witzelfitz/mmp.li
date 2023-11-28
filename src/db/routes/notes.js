@@ -31,7 +31,8 @@ router.delete('/delete/:noteId', async (req, res) => {
 
 // Eine neue Notiz erstellen
 router.post('/', async (req, res) => {
-    const { noteId, title, text } = req.body;
+    let { noteId, title, text } = req.body;
+    noteId = noteId.replace(/\s+/g, '');
     
     // Packen Sie den 'title' und 'text' in ein 'entries'-Array
     const noteData = {
