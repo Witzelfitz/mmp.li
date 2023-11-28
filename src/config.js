@@ -3,7 +3,7 @@ const config = {
     dbUser: process.env.MONGO_DB_USER,
     dbPassword: process.env.MONGO_DB_PASSWORD,
     dbName: process.env.MONGO_DB_NAME,
-    Port: process.env.PORT
+    Port: process.env.PORT || 3000
 };
 
 export default config;
