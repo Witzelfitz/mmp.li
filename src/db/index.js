@@ -1,16 +1,6 @@
 import mongoose from 'mongoose';
 import config from '../config.js';
 
-// const connectDB = async () => {
-//     try {
-//         await mongoose.connect('mongodb://localhost/mmpli');
-//         console.log('MongoDB connected');
-//     } catch (error) {
-//         console.error('Could not connect to MongoDB', error);
-//         process.exit(1);
-//     }
-// };
-
 const connectDB = async () => {
     try {
         const dbUser = config.dbUser; // Username from config

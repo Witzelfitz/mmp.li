@@ -2,6 +2,7 @@ import { connectDB } from './db/index.js';
 import express from 'express';
 import { leaderboardRouter } from './db/routes/leaderboards.js';
 import { notesRouter } from './db/routes/notes.js';
+import { chatsRouter } from './db/routes/chats.js';
 import cors from 'cors';
 import config from './config.js';
 
@@ -19,6 +20,7 @@ app.use(express.static('public'));
 
 app.use('/leaderboards', leaderboardRouter);
 app.use('/notes', notesRouter);
+app.use('/chats', chatsRouter);
 
 // Start Express app
 const port = config.Port;
