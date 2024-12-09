@@ -17,14 +17,13 @@ const chatSchema = new mongoose.Schema({
 function validateChat(chat) {
     const schema = Joi.object({
         roomId: Joi.string().required(),
-        messages: Joi.array().required()
+        messages: Joi.array()
     });
     return schema.validate(chat);
 }
 
 function validateMessage(message) {
     const schema = Joi.object({
-        randomName: Joi.string().required(),
         content: Joi.string().required()
     });
     return schema.validate(message);

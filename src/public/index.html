@@ -17,14 +17,16 @@
                 Falls weitere Endpunkte benötigt werden:
                 Mail an <a href="mailto:benjamin.hanimann@fhgr.ch">benjamin.hanimann@fhgr.ch</a></p>
             <nav class="api-nav">
-                <button class="nav-button active" onclick="showSection('leaderboards')">Leaderboards</button>
-                <button class="nav-button" onclick="showSection('notes')">Notes</button>
+                <button class="nav-button active" data-section="leaderboards"
+                    onclick="showSection('leaderboards')">Leaderboards</button>
+                <button class="nav-button" data-section="notes" onclick="showSection('notes')">Notes</button>
+                <button class="nav-button" data-section="chats" onclick="showSection('chats')">Chats</button>
             </nav>
         </header>
 
         <section id="leaderboards" class="api-section active">
             <h2>Leaderboards API</h2>
-            <div class="endpoint-group">
+            <div class="endpoint-group get-group">
                 <h3>GET Endpoints</h3>
                 <div class="endpoint">
                     <a href="https://mmp.li/leaderboards" target="_blank">
@@ -45,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="endpoint-group">
+            <div class="endpoint-group post-group">
                 <h3>POST Endpoints</h3>
                 <div class="endpoint">
                     <a href="https://mmp.li/leaderboards" target="_blank">
@@ -64,7 +66,7 @@
 
         <section id="notes" class="api-section">
             <h2>Notes API</h2>
-            <div class="endpoint-group">
+            <div class="endpoint-group get-group">
                 <h3>GET Endpoints</h3>
                 <div class="endpoint">
                     <a href="https://mmp.li/notes" target="_blank">
@@ -85,7 +87,7 @@
                 </div>
             </div>
 
-            <div class="endpoint-group">
+            <div class="endpoint-group post-group">
                 <h3>POST Endpoints</h3>
                 <div class="endpoint">
                     <a href="https://mmp.li/notes" target="_blank">
@@ -97,6 +99,151 @@
                         <input type="text" id="noteTitle" placeholder="Title">
                         <input type="text" id="noteText" placeholder="Text">
                         <button onclick="createNote()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group put-group">
+                <h3>PUT Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/notes/:noteId" target="_blank">
+                        <h4>/notes/:noteId</h4>
+                    </a>
+                    <p>Update a note</p>
+                    <div class="input-group">
+                        <input type="text" id="updateNoteId" placeholder="Note ID">
+                        <input type="text" id="updateNoteTitle" placeholder="New Title">
+                        <input type="text" id="updateNoteText" placeholder="New Text">
+                        <button onclick="updateNote()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group delete-group">
+                <h3>DELETE Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/notes/:noteId" target="_blank">
+                        <h4>/notes/:noteId</h4>
+                    </a>
+                    <p>Delete a note</p>
+                    <div class="input-group">
+                        <input type="text" id="deleteNoteId" placeholder="Note ID">
+                        <button onclick="deleteNote()">Test</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chats" class="api-section">
+            <h2>Chats API</h2>
+            <div class="endpoint-group get-group">
+                <h3>GET Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats" target="_blank">
+                        <h4>/chats</h4>
+                    </a>
+                    <p>Get all chats</p>
+                    <button onclick="testEndpoint('/chats', 'GET')">Test</button>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:id" target="_blank">
+                        <h4>/chats/:id</h4>
+                    </a>
+                    <p>Get a specific chat</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="chatId"></select>
+                        <button onclick="testChatById()">Test</button>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:chatId/messages" target="_blank">
+                        <h4>/chats/:chatId/messages</h4>
+                    </a>
+                    <p>Get all messages in a chat</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="chatMessagesId"></select>
+                        <button onclick="testChatMessages()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group post-group">
+                <h3>POST Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats" target="_blank">
+                        <h4>/chats</h4>
+                    </a>
+                    <p>Create new chat</p>
+                    <div class="input-group">
+                        <input type="text" id="chatTitle" placeholder="Chat Title">
+                        <button onclick="createChat()">Test</button>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:chatId/messages" target="_blank">
+                        <h4>/chats/:chatId/messages</h4>
+                    </a>
+                    <p>Add message to chat</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="messageChatId"></select>
+                        <input type="text" id="messageText" placeholder="Message Text">
+                        <button onclick="createChatMessage()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group put-group">
+                <h3>PUT Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:id" target="_blank">
+                        <h4>/chats/:id</h4>
+                    </a>
+                    <p>Update a chat</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="updateChatId"></select>
+                        <input type="text" id="updateChatTitle" placeholder="New Title">
+                        <button onclick="updateChat()">Test</button>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:chatId/messages/:messageId" target="_blank">
+                        <h4>/chats/:chatId/messages/:messageId</h4>
+                    </a>
+                    <p>Update a message</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="updateMessageChatId"></select>
+                        <select id="messageSelect" disabled>
+                            <option value="">Select a message...</option>
+                        </select>
+                        <input type="text" id="updateMessageText" placeholder="New message text">
+                        <button onclick="updateChatMessage()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group delete-group">
+                <h3>DELETE Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:id" target="_blank">
+                        <h4>/chats/:id</h4>
+                    </a>
+                    <p>Delete a chat</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="deleteChatId"></select>
+                        <button onclick="deleteChat()">Test</button>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/chats/:chatId/messages/:messageId" target="_blank">
+                        <h4>/chats/:chatId/messages/:messageId</h4>
+                    </a>
+                    <p>Delete a message</p>
+                    <div class="input-group">
+                        <select class="chat-select" id="deleteMessageChatId"></select>
+                        <select id="deleteMessageSelect" disabled>
+                            <option value="">Select a message...</option>
+                        </select>
+                        <button onclick="deleteChatMessage()">Test</button>
                     </div>
                 </div>
             </div>

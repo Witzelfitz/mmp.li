@@ -1,11 +1,11 @@
 import express from 'express';
-import { Chat, Message, validateChat, validateMessage } from '../models/chat.js';
+import { Chat, Message, validateChat, validateMessage, generateRandomName } from '../models/chat.js';
 
 const router = express.Router();
 
 // Get all chats
 router.get('/', async (req, res) => {
-    const chats = await Chat.find();
+    const chats = await Chat.find().select('-messages');
     res.send(chats);
 });
 
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res) => {
 
 // Delete a chat
 router.delete('/:id', async (req, res) => {
-    const chat = await Chat.findByIdAndRemove(req.params.id);
+    const chat = await Chat.findByIdAndDelete(req.params.id);
     if (!chat) return res.status(404).send(`Chat with ID ${req.params.id} not found`);
     res.send(chat);
 });
@@ -51,7 +51,16 @@ router.post('/:chatId/messages', async (req, res) => {
     const chat = await Chat.findById(req.params.chatId);
     if (!chat) return res.status(404).send(`Chat with ID ${req.params.chatId} not found`);
 
-    const message = new Message(req.body);
+    // Generate random name for the message
+    const randomName = generateRandomName();
+
+    // Create message with generated name and content from request
+    const messageData = {
+        randomName,
+        content: req.body.content
+    };
+
+    const message = new Message(messageData);
     chat.messages.push(message);
     await chat.save();
     res.send(message);
@@ -92,15 +101,22 @@ router.put('/:chatId/messages/:messageId', async (req, res) => {
 
 // Delete a message
 router.delete('/:chatId/messages/:messageId', async (req, res) => {
-    const chat = await Chat.findById(req.params.chatId);
-    if (!chat) return res.status(404).send(`Chat with ID ${req.params.chatId} not found`);
+    try {
+        const chat = await Chat.findById(req.params.chatId);
+        if (!chat) return res.status(404).send(`Chat with ID ${req.params.chatId} not found`);
 
-    const message = chat.messages.id(req.params.messageId);
-    if (!message) return res.status(404).send(`Message with ID ${req.params.messageId} not found`);
+        const message = chat.messages.id(req.params.messageId);
+        if (!message) return res.status(404).send(`Message with ID ${req.params.messageId} not found`);
 
-    message.remove();
-    await chat.save();
-    res.send(message);
+        // Use pull() instead of remove() as it's more reliable for subdocuments
+        chat.messages.pull(req.params.messageId);
+        await chat.save();
+        
+        res.status(200).json({ message: 'Message deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        res.status(500).json({ error: 'Failed to delete message' });
+    }
 });
 
 export { router as chatsRouter };

@@ -1,3 +1,29 @@
+:root {
+    /* Main colors */
+    --color-primary: #007bff;
+    --color-primary-dark: #0056b3;
+    --color-success: #28a745;
+    --color-success-dark: #1e7e34;
+    --color-warning: #ffc107;
+    --color-warning-dark: #d39e00;
+    --color-danger: #dc3545;
+    --color-danger-dark: #bd2130;
+    
+    /* Background colors */
+    --bg-light: #f4f4f4;
+    --bg-white: #ffffff;
+    --bg-response: #f8f9fa;
+    --bg-code: #272822;
+    
+    /* Text colors */
+    --text-dark: #333;
+    --text-code: #f8f8f2;
+    
+    /* Border colors */
+    --border-light: #ddd;
+    --border-lighter: #eee;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +34,7 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: var(--bg-light);
 }
 
 .container {
@@ -38,8 +64,84 @@ h1, h2, h3, h4 {
 .endpoint-group {
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #f8f9fa;
     border-radius: 6px;
+    border-left: 4px solid;
+}
+
+/* GET endpoints - Blue */
+.get-group {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-left-color: var(--color-primary);
+}
+
+/* POST endpoints - Green */
+.post-group {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-left-color: var(--color-success);
+}
+
+/* PUT endpoints - Yellow */
+.put-group {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left-color: var(--color-warning);
+}
+
+/* DELETE endpoints - Red */
+.delete-group {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left-color: var(--color-danger);
+}
+
+/* Update endpoint titles to match their group colors */
+.get-group h3 {
+    color: var(--color-primary);
+}
+
+.post-group h3 {
+    color: var(--color-success);
+}
+
+.put-group h3 {
+    color: var(--color-warning);
+}
+
+.delete-group h3 {
+    color: var(--color-danger);
+}
+
+/* Update buttons to match their operation type */
+.get-group button {
+    background-color: var(--color-primary);
+}
+
+.post-group button {
+    background-color: var(--color-success);
+}
+
+.put-group button {
+    background-color: var(--color-warning);
+    color: var(--text-dark);
+}
+
+.delete-group button {
+    background-color: var(--color-danger);
+}
+
+/* Button hover states */
+.get-group button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.post-group button:hover {
+    background-color: var(--color-success-dark);
+}
+
+.put-group button:hover {
+    background-color: var(--color-warning-dark);
+}
+
+.delete-group button:hover {
+    background-color: var(--color-danger-dark);
 }
 
 .endpoint {
@@ -222,4 +324,19 @@ button {
   .endpoint {
     margin-bottom: 15px;
   }
+}
+
+select.chat-select {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 200px;
+    background-color: white;
+}
+
+select.chat-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
 }
