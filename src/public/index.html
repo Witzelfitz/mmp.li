@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>API Documentation</h1>
+            <p>Das sind Endpunkte für das MMP Studium an der FHGR.
+                Es können Bestenlisten und Notizbücher erstellt und mit der API Schnittstelle genutzt werden.
+                Falls weitere Endpunkte benötigt werden:
+                Mail an <a href="mailto:benjamin.hanimann@fhgr.ch">benjamin.hanimann@fhgr.ch</a></p>
+            <nav class="api-nav">
+                <button class="nav-button active" onclick="showSection('leaderboards')">Leaderboards</button>
+                <button class="nav-button" onclick="showSection('notes')">Notes</button>
+            </nav>
+        </header>
+
+        <section id="leaderboards" class="api-section active">
+            <h2>Leaderboards API</h2>
+            <div class="endpoint-group">
+                <h3>GET Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/leaderboards" target="_blank">
+                        <h4>/leaderboards</h4>
+                    </a>
+                    <p>Get all leaderboards</p>
+                    <button onclick="testEndpoint('/leaderboards', 'GET')">Test</button>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/leaderboards/:id" target="_blank">
+                        <h4>/leaderboards/:id</h4>
+                    </a>
+                    <p>Get a specific leaderboard</p>
+                    <div class="input-group">
+                        <input type="text" id="leaderboardId" placeholder="Enter ID">
+                        <button onclick="testLeaderboardById()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group">
+                <h3>POST Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/leaderboards" target="_blank">
+                        <h4>/leaderboards</h4>
+                    </a>
+                    <p>Create new leaderboard entry</p>
+                    <div class="input-group">
+                        <input type="text" id="projectId" placeholder="Project ID">
+                        <input type="text" id="name" placeholder="Name">
+                        <input type="number" id="score" placeholder="Score">
+                        <button onclick="createLeaderboard()">Test</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="notes" class="api-section">
+            <h2>Notes API</h2>
+            <div class="endpoint-group">
+                <h3>GET Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/notes" target="_blank">
+                        <h4>/notes</h4>
+                    </a>
+                    <p>Get all notes</p>
+                    <button onclick="testEndpoint('/notes', 'GET')">Test</button>
+                </div>
+                <div class="endpoint">
+                    <a href="https://mmp.li/notes/:noteId" target="_blank">
+                        <h4>/notes/:noteId</h4>
+                    </a>
+                    <p>Get a specific note</p>
+                    <div class="input-group">
+                        <input type="text" id="noteId" placeholder="Enter Note ID">
+                        <button onclick="testNoteById()">Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="endpoint-group">
+                <h3>POST Endpoints</h3>
+                <div class="endpoint">
+                    <a href="https://mmp.li/notes" target="_blank">
+                        <h4>/notes</h4>
+                    </a>
+                    <p>Create new note</p>
+                    <div class="input-group">
+                        <input type="text" id="newNoteId" placeholder="Note ID">
+                        <input type="text" id="noteTitle" placeholder="Title">
+                        <input type="text" id="noteText" placeholder="Text">
+                        <button onclick="createNote()">Test</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="response">
+            <h3>Response</h3>
+            <pre id="responseData"></pre>
+        </section>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
