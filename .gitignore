@@ -402,3 +402,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 default.err
+
+
+.DS_Store
