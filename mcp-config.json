@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "mmp.li": {
+      "command": "node",
+      "args": ["src/index.js"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  },
+  "httpServers": {
+    "mmp.li": {
+      "url": "http://localhost:3000/mcp",
+      "name": "mmp.li API Server",
+      "description": "MCP server providing access to leaderboards, notes, and chat functionality"
+    }
+  }
+} 
