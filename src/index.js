@@ -15,11 +15,15 @@ const app = express();
 
 // Configure Express app
 app.use(express.json());
+
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://mmp.li'],
-    credentials: true,
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: false, // Note: credentials must be false when origin is '*'
     exposedHeaders: ['X-MCP-Session-Id']
 }));
+
+
 app.use(express.static('public'));
 
 
