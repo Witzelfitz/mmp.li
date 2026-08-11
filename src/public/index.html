@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Documentation</title>
+    <title>mmp.li API-Dokumentation</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <div class="container">
         <header>
-            <h1>API Documentation</h1>
+            <h1>mmp.li API-Dokumentation</h1>
             <p>Das sind Endpunkte für das MMP Studium an der FHGR.
                 Es können Bestenlisten und Notizbücher erstellt und mit der API Schnittstelle genutzt werden.
                 Falls weitere Endpunkte benötigt werden:
@@ -106,12 +106,12 @@
             <div class="endpoint-group put-group">
                 <h3>PUT Endpoints</h3>
                 <div class="endpoint">
-                    <a href="https://mmp.li/notes/:noteId" target="_blank">
-                        <h4>/notes/:noteId</h4>
+                    <a href="https://mmp.li/notes/entry/:entryId" target="_blank">
+                        <h4>/notes/entry/:entryId</h4>
                     </a>
-                    <p>Update a note</p>
+                    <p>Update a note entry</p>
                     <div class="input-group">
-                        <input type="text" id="updateNoteId" placeholder="Note ID">
+                        <input type="text" id="updateEntryId" placeholder="Entry ID">
                         <input type="text" id="updateNoteTitle" placeholder="New Title">
                         <input type="text" id="updateNoteText" placeholder="New Text">
                         <button onclick="updateNote()">Test</button>

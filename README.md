@@ -1,77 +1,44 @@
-# Leaderboard API - Anleitung für Studierende
-## Übersicht
-Dieses Dokument enthält Anleitungen zur Nutzung der Leaderboard API. Die API ermöglicht es, Daten in ein Leaderboard zu schreiben und diese abzurufen. Die API ist unter https://mmp.li/ erreichbar.
+# mmp.li API
 
-## API Routen
-### Alle Leaderboards abrufen
-- **URL**: /leaderboards
-- **Methode**: GET
-- **Beschreibung**: Ruft alle Leaderboards aus der Datenbank ab.
-### Leaderboard nach Projekt-ID abrufen
-- **URL**: /leaderboards/:projectId
-- **Methode**: GET
-- **Beschreibung**: Ruft ein spezifisches Leaderboard anhand seiner Projekt-ID ab.
+Öffentliche API für MMP-Projekte an der FHGR. Sie stellt Bestenlisten, Notizbücher, Chats und einen MCP-Endpunkt bereit.
 
-### Neuen Eintrag im Leaderboard erstellen
-- **URL**: /leaderboards
-- **Methode**: POST
-- **Beschreibung**: Erstellt einen neuen Eintrag im Leaderboard.
-- Datenparameter:
-    - projectId: Die Projekt-ID (type=string)
-    - name: Der Name des Teilnehmenden (type=string)
-    - score: Die Punktzahl des Teilnehmenden (type=number)
+## Entwicklung
 
-## Code-Beispiele
-### Funktion zum Abrufen von Daten (getData)
-```javascript
-const gameID = "test"; // Setzen Sie hier die entsprechende Spiel-ID
+Voraussetzungen: Node.js 20 oder neuer und eine erreichbare MongoDB.
 
-async function getData() {
-    try {
-        const response = await fetch(`https://mmp.li/leaderboards/${gameID}`);
-        if (!response.ok) {
-            throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        // Hier können Sie die Daten verarbeiten
-        console.log(data);
-    } catch (error) {
-        console.error('Fehler:', error);
-    }
-}
+```bash
+npm ci
+npm run check
+npm start
 ```
-### Funktion zum Senden von Daten (postData)
-```javascript
-async function postData() {
-    const data = {
-        projectId: gameID, // Die Spiel-ID
-        name: "Max",       // Name des Teilnehmenden
-        score: 2000,       // Punktzahl
-    };
 
-    try {
-        const response = await fetch('https://mmp.li/leaderboards/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-        });
+Die Anwendung verwendet folgende Umgebungsvariablen:
 
-        if (!response.ok) {
-            throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-        }
+- `PORT` – HTTP-Port, standardmässig `3000`
+- `MONGODB_DB_HOST` – MongoDB-Host, standardmässig `127.0.0.1:27017`
+- `MONGO_DB_USER` – MongoDB-Benutzer
+- `MONGO_DB_PASSWORD` – MongoDB-Passwort
+- `MONGO_DB_NAME` – Datenbankname, standardmässig `mmpli`
 
-        const responseData = await response.json();
-        console.log(responseData);
-        // Hier können Sie die Antwort verarbeiten
-    } catch (error) {
-        console.error('Fehler:', error);
-    }
-}
+## Endpunkte
+
+| Methode | Pfad | Zweck |
+| --- | --- | --- |
+| `GET` | `/health` | Dienst- und Datenbankstatus |
+| `GET`, `POST` | `/leaderboards` | Bestenlisten lesen und Einträge erstellen |
+| `GET` | `/leaderboards/:projectId` | Eine Bestenliste lesen |
+| `GET`, `POST` | `/notes` | Notizbücher lesen und Einträge erstellen |
+| `GET`, `DELETE` | `/notes/:noteId` | Notizbuch lesen oder löschen |
+| `PUT` | `/notes/entry/:entryId` | Einzelnen Notizeintrag aktualisieren |
+| `GET`, `POST`, `PUT`, `DELETE` | `/chats/...` | Chats und Nachrichten verwalten |
+| `GET`, `POST` | `/mcp` | MCP-Discovery und JSON-RPC |
+
+Die interaktive Übersicht wird unter [https://mmp.li](https://mmp.li) ausgeliefert.
+
+## Produktionsprüfung
+
+```bash
+BASE_URL=https://mmp.li npm run smoke
 ```
-## Nutzung
-Integrieren Sie die Funktionen getData und postData in Ihre Frontend-Anwendung, um die Leaderboard-Daten abzurufen bzw. neue Daten zu senden.
 
-## Mitwirkung
-Beiträge zur Verbesserung der API sind willkommen. Einfach einen "issues" erstellen.
+Der Smoke-Test ist rein lesend und verändert keine Daten.

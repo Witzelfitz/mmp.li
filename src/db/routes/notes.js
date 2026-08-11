@@ -19,22 +19,26 @@ router.get('/:noteId', async (req, res) => {
     res.send(note);
 });
 
-// Eine Notiz löschen
-router.delete('/delete/:noteId', async (req, res) => {
+async function deleteNote(req, res) {
     const noteId = req.params.noteId;
     const note = await Note.findOneAndDelete({ noteId });
     if (!note) {
         return res.status(404).send(`Note with ID ${noteId} not found`);
     }
-    res.send(note);
-});
+    return res.send(note);
+}
+
+// REST route plus backwards-compatible legacy route
+router.delete('/:noteId', deleteNote);
+router.delete('/delete/:noteId', deleteNote);
 
 // Eine neue Notiz erstellen
 router.post('/', async (req, res) => {
-    let { noteId, title, text } = req.body;
-    noteId = noteId.replace(/\s+/g, '');
+    const { title, text } = req.body;
+    const noteId = typeof req.body.noteId === 'string'
+        ? req.body.noteId.replace(/\s+/g, '')
+        : '';
     
-    // Packen Sie den 'title' und 'text' in ein 'entries'-Array
     const noteData = {
         noteId,
         entries: [{ title, text }]
@@ -64,13 +68,15 @@ router.put('/entry/:entryId', async (req, res) => {
     const entryId = req.params.entryId;
     const { title, text } = req.body;
 
-    // Validierung (optional, kann nach Bedarf angepasst werden)
     if (!title || !text) {
         return res.status(400).send('Title and text are required.');
     }
 
+    if (title.length > 20 || text.length > 200) {
+        return res.status(400).send('Title must be at most 20 and text at most 200 characters.');
+    }
+
     try {
-        // Finden und Aktualisieren des Eintrags in der Notiz
         const note = await Note.findOneAndUpdate(
             { "entries._id": entryId },
             { 
@@ -79,7 +85,7 @@ router.put('/entry/:entryId', async (req, res) => {
                     "entries.$.text": text
                 }
             },
-            { new: true } // Gibt das aktualisierte Dokument zurück
+            { new: true }
         );
 
         if (!note) {

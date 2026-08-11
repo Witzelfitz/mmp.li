@@ -3,18 +3,16 @@ import config from '../config.js';
 
 const connectDB = async () => {
     try {
-        const dbUser = config.dbUser; // Username from config
-        const dbPassword = config.dbPassword; // Password from config
-
-        // Construct the MongoDB URI
-        const uri = `mongodb://${dbUser}:${dbPassword}@127.0.0.1:27017/mmpli?authSource=admin`;
-        await mongoose.connect(uri);
+        const username = encodeURIComponent(config.dbUser || '');
+        const password = encodeURIComponent(config.dbPassword || '');
+        const credentials = username ? `${username}:${password}@` : '';
+        const uri = `mongodb://${credentials}${config.dbHost}/${config.dbName}?authSource=admin`;
+        await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
         console.log('MongoDB connected');
     } catch (error) {
         console.error('Could not connect to MongoDB', error);
-        process.exit(1);
+        throw error;
     }
 };
 
 export { connectDB };
-

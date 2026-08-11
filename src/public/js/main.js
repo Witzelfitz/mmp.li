@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://mmp.li';
+const API_BASE_URL = window.location.origin;
 
 function showSection(sectionId) {
     // Hide all sections
@@ -129,24 +129,6 @@ function createNote() {
     testEndpoint('/notes', 'POST', body);
 }
 
-function updateNoteEntry() {
-    const entryId = document.getElementById('entryId').value;
-    const title = document.getElementById('updateTitle').value;
-    const text = document.getElementById('updateText').value;
-
-    if (!entryId || !title || !text) {
-        displayResponse({ error: 'Please fill all fields' });
-        return;
-    }
-
-    const body = {
-        title,
-        text
-    };
-
-    testEndpoint(`/notes/entry/${entryId}`, 'PUT', body);
-}
-
 function displayResponse(data) {
     const responseElement = document.getElementById('responseData');
     responseElement.textContent = JSON.stringify(data, null, 2);
@@ -254,11 +236,11 @@ function deleteNote() {
 }
 
 function updateNote() {
-    const noteId = document.getElementById('updateNoteId').value;
+    const entryId = document.getElementById('updateEntryId').value;
     const title = document.getElementById('updateNoteTitle').value;
     const text = document.getElementById('updateNoteText').value;
     
-    if (!noteId || !title || !text) {
+    if (!entryId || !title || !text) {
         displayResponse({ error: 'Please fill all fields' });
         return;
     }
@@ -278,7 +260,7 @@ function updateNote() {
         text
     };
     
-    testEndpoint(`/notes/${noteId}`, 'PUT', body);
+    testEndpoint(`/notes/entry/${entryId}`, 'PUT', body);
 }
 
 async function loadMessages(chatId, targetSelect) {
