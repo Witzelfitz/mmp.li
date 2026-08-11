@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { Note, validateNote } from '../models/note.js';
 
 const router = express.Router();
@@ -68,6 +69,10 @@ router.put('/entry/:entryId', async (req, res) => {
     const entryId = req.params.entryId;
     const { title, text } = req.body;
 
+    if (!mongoose.isObjectIdOrHexString(entryId)) {
+        return res.status(400).json({ error: 'Invalid entry ID' });
+    }
+
     if (!title || !text) {
         return res.status(400).send('Title and text are required.');
     }
@@ -94,7 +99,8 @@ router.put('/entry/:entryId', async (req, res) => {
 
         res.send(note);
     } catch (e) {
-        res.status(500).send('An error occurred: ' + e.message);
+        console.error('Could not update note entry:', e);
+        res.status(500).json({ error: 'Could not update note entry' });
     }
 });
 

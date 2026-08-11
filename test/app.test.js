@@ -61,3 +61,16 @@ test('returns JSON for unknown routes and invalid MCP requests', async () => {
         assert.equal((await invalidMcp.json()).error.code, -32600);
     });
 });
+
+test('rejects malformed note entry IDs before querying MongoDB', async () => {
+    await withServer(async (baseUrl) => {
+        const response = await fetch(`${baseUrl}/notes/entry/not-an-object-id`, {
+            method: 'PUT',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ title: 'Probe', text: 'Probe' })
+        });
+
+        assert.equal(response.status, 400);
+        assert.deepEqual(await response.json(), { error: 'Invalid entry ID' });
+    });
+});
